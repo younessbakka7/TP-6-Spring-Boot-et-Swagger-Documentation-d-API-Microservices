@@ -1,0 +1,262 @@
+{
+  "post_student1": {
+    "id": 1,
+    "nom": "LACHGAR",
+    "prenom": "Mohamed",
+    "dateNaissance": "1985-09-01T00:00:00.000+00:00"
+  },
+  "post_student2": {
+    "id": 2,
+    "nom": "BENANI",
+    "prenom": "Fatima",
+    "dateNaissance": "1985-11-15T00:00:00.000+00:00"
+  },
+  "post_student3": {
+    "id": 3,
+    "nom": "ALAMI",
+    "prenom": "Yassine",
+    "dateNaissance": "1990-04-20T00:00:00.000+00:00"
+  },
+  "get_all": [
+    {
+      "id": 1,
+      "nom": "LACHGAR",
+      "prenom": "Mohamed",
+      "dateNaissance": "1985-09-01"
+    },
+    {
+      "id": 2,
+      "nom": "BENANI",
+      "prenom": "Fatima",
+      "dateNaissance": "1985-11-15"
+    },
+    {
+      "id": 3,
+      "nom": "ALAMI",
+      "prenom": "Yassine",
+      "dateNaissance": "1990-04-20"
+    }
+  ],
+  "get_count": 3,
+  "get_by_year": [
+    [
+      1985,
+      2
+    ],
+    [
+      1990,
+      1
+    ]
+  ],
+  "openapi": {
+    "openapi": "3.0.1",
+    "info": {
+      "title": "TP 6 : Spring Boot et Swagger - Documentation d'API Microservices",
+      "description": "Microservice Spring Boot complet de gestion des \u00e9tudiants avec documentation interactive Swagger / OpenAPI. Permet d'effectuer les op\u00e9rations CRUD et d'analyser les statistiques d\u00e9mographiques.",
+      "contact": {
+        "name": "Youness Bakka",
+        "url": "https://github.com/younessbakka7",
+        "email": "younessbakka7@gmail.com"
+      },
+      "license": {
+        "name": "Apache 2.0",
+        "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+      },
+      "version": "1.0.0"
+    },
+    "servers": [
+      {
+        "url": "http://localhost:8080",
+        "description": "Serveur Local de D\u00e9veloppement"
+      }
+    ],
+    "tags": [
+      {
+        "name": "Student Controller",
+        "description": "Gestion compl\u00e8te des \u00e9tudiants et des statistiques associ\u00e9es"
+      }
+    ],
+    "paths": {
+      "/students/save": {
+        "post": {
+          "tags": [
+            "Student Controller"
+          ],
+          "summary": "Enregistrer un \u00e9tudiant",
+          "description": "Permet de cr\u00e9er un nouvel \u00e9tudiant ou de modifier un \u00e9tudiant existant",
+          "operationId": "save",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Student"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "201": {
+              "description": "\u00c9tudiant ajout\u00e9 avec succ\u00e8s",
+              "content": {
+                "*/*": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Student"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Donn\u00e9es d'\u00e9tudiant invalides",
+              "content": {
+                "*/*": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Student"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/students/count": {
+        "get": {
+          "tags": [
+            "Student Controller"
+          ],
+          "summary": "Compter les \u00e9tudiants",
+          "description": "Retourne le nombre total d'\u00e9tudiants enregistr\u00e9s dans la base de donn\u00e9es",
+          "operationId": "countStudent",
+          "responses": {
+            "200": {
+              "description": "Nombre total d'\u00e9tudiants renvoy\u00e9",
+              "content": {
+                "*/*": {
+                  "schema": {
+                    "type": "integer",
+                    "format": "int64"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/students/byYear": {
+        "get": {
+          "tags": [
+            "Student Controller"
+          ],
+          "summary": "Statistiques des \u00e9tudiants par ann\u00e9e",
+          "description": "Agr\u00e8ge et compte le nombre d'\u00e9tudiants n\u00e9s pour chaque ann\u00e9e",
+          "operationId": "findByYear",
+          "responses": {
+            "200": {
+              "description": "R\u00e9partition des \u00e9tudiants par ann\u00e9e de naissance",
+              "content": {
+                "*/*": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/students/all": {
+        "get": {
+          "tags": [
+            "Student Controller"
+          ],
+          "summary": "R\u00e9cup\u00e9rer tous les \u00e9tudiants",
+          "description": "Renvoie la liste exhaustive de tous les \u00e9tudiants enregistr\u00e9s",
+          "operationId": "findAll",
+          "responses": {
+            "200": {
+              "description": "Liste compl\u00e8te des \u00e9tudiants renvoy\u00e9e",
+              "content": {
+                "*/*": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Student"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/students/delete/{id}": {
+        "delete": {
+          "tags": [
+            "Student Controller"
+          ],
+          "summary": "Supprimer un \u00e9tudiant",
+          "description": "Supprime d\u00e9finitivement un \u00e9tudiant selon son identifiant unique",
+          "operationId": "delete",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "Identifiant de l'\u00e9tudiant \u00e0 supprimer",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "format": "int32"
+              },
+              "example": 1
+            }
+          ],
+          "responses": {
+            "404": {
+              "description": "\u00c9tudiant non trouv\u00e9"
+            },
+            "204": {
+              "description": "\u00c9tudiant supprim\u00e9 avec succ\u00e8s"
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "Student": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "description": "Identifiant unique de l'\u00e9tudiant auto-incr\u00e9ment\u00e9",
+              "format": "int32",
+              "example": 1
+            },
+            "nom": {
+              "type": "string",
+              "description": "Nom de famille de l'\u00e9tudiant",
+              "example": "LACHGAR"
+            },
+            "prenom": {
+              "type": "string",
+              "description": "Pr\u00e9nom de l'\u00e9tudiant",
+              "example": "Mohamed"
+            },
+            "dateNaissance": {
+              "type": "string",
+              "description": "Date de naissance de l'\u00e9tudiant au format YYYY-MM-DD",
+              "format": "date-time"
+            }
+          },
+          "description": "Objet JSON contenant les informations de l'\u00e9tudiant"
+        }
+      }
+    }
+  },
+  "swagger_ui_status": 200,
+  "delete_status": 204,
+  "get_count_after_del": 2
+}
